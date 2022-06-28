@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  rabbitmq3:
+    container_name: "rabbitmq"
+    image: rabbitmq:3.8-management-alpine
+    ports:
+    - '5672:5672'
+    - '15672:15672'
+    env_file:
+    - '.env.dev'
+    volumes:
+    - rabbitdata:/var/lib/rabbitmq/
+    - rabbitlogs:/var/log/rabbitmq/
+
+  redis-cache:
+    container_name: redis-cache
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+    - '6379:6379'
+    env_file:
+    - '.env.dev'
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PWD}
+    volumes: 
+    - redis-cache:/data
+
+
+volumes:
+  rabbitdata:
+  rabbitlogs:
+  redis-cache:
+    driver: local
+
+
+
+
+  #scp.transaction.api:
+  #  image: ${DOCKER_REGISTRY-}scptransactionapi
+  #  build:
+  #    context: .
+  #    dockerfile: src/Transaction/SCP.Transaction.API/Dockerfile
