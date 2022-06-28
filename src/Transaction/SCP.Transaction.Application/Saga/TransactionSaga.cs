@@ -26,7 +26,7 @@ namespace SCP.Transaction.Application.Saga
 
             DuringAny(
                 When(OnGet)
-                    .RespondAsync(x => x.Init<TransactionModel>(new
+                    .RespondAsync(x => x.Init<ITransactionResponse>(new
                     {
                         x.Saga.Transaction
                     })));

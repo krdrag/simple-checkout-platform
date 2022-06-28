@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SCP.Transaction.Application.Models
+﻿namespace SCP.Transaction.Application.Models
 {
     public class PaymentModel
     {
+        public int PaymentMediaId { get; set; }
+        public decimal Amount { get; set; }
         public int LineNumber { get; set; }
     }
 }

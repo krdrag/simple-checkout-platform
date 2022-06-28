@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SCP.Transaction.Application.Models
+﻿namespace SCP.Transaction.Application.Models
 {
     public class ArticleModel
     {
+        public int Quantity { get; set; }
+        public decimal TotalPrice { get; set; }
+        public ArticleDataModel ArticleData { get; set; } = new ArticleDataModel();
         public int LineNumber { get; set; }
     }
 }

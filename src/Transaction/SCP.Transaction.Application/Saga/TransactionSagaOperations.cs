@@ -24,10 +24,21 @@ namespace SCP.Transaction.Application.Saga
         {
             return context =>
             {
-                foreach (var article in context.Message.ArticlesToAdd)
+                foreach (var articleData in context.Message.ArticlesToAdd)
                 {
-                    article.LineNumber = ++context.Saga.CurrentLineNumber;
-                    context.Saga.Transaction.Articles.Add(article);
+                    var article = context.Saga.Transaction.Articles.FirstOrDefault(x => x.ArticleData.EAN.Equals(articleData.EAN));
+                    if(article == null)
+                    {
+                        article = new Models.ArticleModel
+                        {
+                            ArticleData = articleData,
+                            LineNumber = ++context.Saga.CurrentLineNumber
+                        };
+                        context.Saga.Transaction.Articles.Add(article);
+                    }
+
+                    article.Quantity++;
+                    article.TotalPrice += articleData.Price; 
                 }
             };
         }
