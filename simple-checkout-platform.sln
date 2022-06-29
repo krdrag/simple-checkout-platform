@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{AA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transaction", "Transaction", "{298F8E12-4C91-40FA-BE43-AAEF0A0BD1AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.Transaction.API", "src\Transaction\SCP.Transaction.API\SCP.Transaction.API.csproj", "{73276FAC-1E67-4394-95BC-85788CA79F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCP.Transaction.API", "src\Transaction\SCP.Transaction.API\SCP.Transaction.API.csproj", "{73276FAC-1E67-4394-95BC-85788CA79F93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.Transaction.Application", "src\Transaction\SCP.Transaction.Application\SCP.Transaction.Application.csproj", "{1F7B7780-F560-48E4-AC8F-203AEFC54967}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCP.Transaction.Application", "src\Transaction\SCP.Transaction.Application\SCP.Transaction.Application.csproj", "{1F7B7780-F560-48E4-AC8F-203AEFC54967}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.Transaction.Domain", "src\Transaction\SCP.Transaction.Domain\SCP.Transaction.Domain.csproj", "{6EA26DDB-ECFC-4CF0-A7E0-757A6AF457B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCP.Transaction.Domain", "src\Transaction\SCP.Transaction.Domain\SCP.Transaction.Domain.csproj", "{6EA26DDB-ECFC-4CF0-A7E0-757A6AF457B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.Transaction.Infrastructure", "src\Transaction\SCP.Transaction.Infrastructure\SCP.Transaction.Infrastructure.csproj", "{04A5AA00-0D5E-457E-B8B0-B20AF3CF43D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCP.Transaction.Infrastructure", "src\Transaction\SCP.Transaction.Infrastructure\SCP.Transaction.Infrastructure.csproj", "{04A5AA00-0D5E-457E-B8B0-B20AF3CF43D8}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A1201000-F059-428A-A6D6-83B93F1462CF}"
 EndProject
@@ -21,6 +21,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.env.dev = .env.dev
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A068712F-A1F2-454C-9AD6-4466DD4E5F54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.Common", "src\Common\SCP.Common\SCP.Common.csproj", "{3C8762BE-2C76-441B-858D-F85AE7EF2663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.MessageBus", "src\Common\SCP.MessageBus\SCP.MessageBus.csproj", "{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +54,14 @@ Global
 		{A1201000-F059-428A-A6D6-83B93F1462CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1201000-F059-428A-A6D6-83B93F1462CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1201000-F059-428A-A6D6-83B93F1462CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C8762BE-2C76-441B-858D-F85AE7EF2663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8762BE-2C76-441B-858D-F85AE7EF2663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8762BE-2C76-441B-858D-F85AE7EF2663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8762BE-2C76-441B-858D-F85AE7EF2663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +72,8 @@ Global
 		{1F7B7780-F560-48E4-AC8F-203AEFC54967} = {298F8E12-4C91-40FA-BE43-AAEF0A0BD1AB}
 		{6EA26DDB-ECFC-4CF0-A7E0-757A6AF457B3} = {298F8E12-4C91-40FA-BE43-AAEF0A0BD1AB}
 		{04A5AA00-0D5E-457E-B8B0-B20AF3CF43D8} = {298F8E12-4C91-40FA-BE43-AAEF0A0BD1AB}
+		{3C8762BE-2C76-441B-858D-F85AE7EF2663} = {A068712F-A1F2-454C-9AD6-4466DD4E5F54}
+		{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE} = {A068712F-A1F2-454C-9AD6-4466DD4E5F54}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77F58FEF-11D4-4853-B9B6-99A1A146F108}

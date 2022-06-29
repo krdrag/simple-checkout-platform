@@ -1,3 +1,4 @@
+using SCP.Common.Middleware;
 using SCP.Transaction.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+
+app.UseExceptionMiddleware();
 
 app.MapControllers();
 
