@@ -24,6 +24,9 @@ namespace SCP.Transaction.Application.Saga
         {
             return context =>
             {
+                if (context.Message.ArticlesToAdd == null)
+                    return;
+
                 foreach (var articleData in context.Message.ArticlesToAdd)
                 {
                     var article = context.Saga.Transaction.Articles.FirstOrDefault(x => x.ArticleData.EAN.Equals(articleData.EAN));
@@ -55,6 +58,9 @@ namespace SCP.Transaction.Application.Saga
         {
             return context =>
             {
+                if (context.Message.PaymentsToAdd == null)
+                    return;
+
                 foreach (var payment in context.Message.PaymentsToAdd)
                 {
                     payment.LineNumber = ++context.Saga.CurrentLineNumber;

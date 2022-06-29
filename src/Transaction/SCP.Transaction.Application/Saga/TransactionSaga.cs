@@ -80,33 +80,33 @@ namespace SCP.Transaction.Application.Saga
             Event(() => OnFinish, x =>
             {
                 x.CorrelateById(m => m.Message.TransactionId);
-                x.OnMissingInstance(m => m.Execute(context =>
+                x.OnMissingInstance(m => m.ExecuteAsync(async context =>
                 {
                     if (context.RequestId.HasValue)
                     {
-                        throw new TransactionNotFoundException();
+                        await context.RespondAsync<ITransactionNotFoundResponse>(new { });
                     }
                 }));
             });
             Event(() => OnUpdate, x =>
             {
                 x.CorrelateById(m => m.Message.TransactionId);
-                x.OnMissingInstance(m => m.Execute(context =>
+                x.OnMissingInstance(m => m.ExecuteAsync(async context =>
                 {
                     if (context.RequestId.HasValue)
                     {
-                        throw new TransactionNotFoundException();
+                        await context.RespondAsync<ITransactionNotFoundResponse>(new { });
                     }
                 }));
             });
             Event(() => OnGet, x =>
             {
                 x.CorrelateById(m => m.Message.TransactionId);
-                x.OnMissingInstance(m => m.Execute(context =>
+                x.OnMissingInstance(m => m.ExecuteAsync(async context =>
                 {
                     if (context.RequestId.HasValue)
                     {
-                        throw new TransactionNotFoundException();
+                        await context.RespondAsync<ITransactionNotFoundResponse>(new { });
                     }
                 }));
             });

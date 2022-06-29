@@ -24,70 +24,70 @@ namespace SCP.Transaction.Application.Services
             _transactionGetClient = transactionGetClient;
         }
 
-        public async Task<TransactionModel> GetTransaction(Guid transactionId)
+        public async Task<TransactionModel?> GetTransaction(Guid transactionId)
         {
-            var result = await _transactionGetClient.GetResponse<ITransactionResponse>(new
+            var (status, error) = await _transactionGetClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = transactionId
             });
 
-            return result.Message.Transaction;
+            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }
 
-        public async Task<TransactionModel> StartTransaction(WorkstationDataModel wsModel)
+        public async Task<TransactionModel?> StartTransaction(WorkstationDataModel wsModel)
         {
-            var result = await _transactionStartClient.GetResponse<ITransactionResponse>(new
+            var (status, error) = await _transactionStartClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = Guid.NewGuid(),
                 WorkstationData = wsModel
             });
 
-            return result.Message.Transaction;
+            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }
 
-        public async Task<TransactionModel> FinishTransaction(Guid transactionId)
+        public async Task<TransactionModel?> FinishTransaction(Guid transactionId)
         {
-            var result = await _transactionFinishClient.GetResponse<ITransactionResponse>(new
+            var (status, error) = await _transactionFinishClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = transactionId
             });
 
-            return result.Message.Transaction;
+            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }
 
-        public async Task<TransactionModel> AddArticles(Guid transactionId, ICollection<ArticleDataModel> Articles)
+        public async Task<TransactionModel?> AddArticles(Guid transactionId, ICollection<ArticleDataModel> Articles)
         {
-            var result = await _transactionUpdatedClient.GetResponse<ITransactionResponse>(new
+            var (status, error) = await _transactionUpdatedClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = transactionId,
                 ArticlesToAdd = Articles,
                 PaymentsToAdd = Array.Empty<PaymentModel>()
             });
 
-            return result.Message.Transaction;
+            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }
 
-        public async Task<TransactionModel> AddPayments(Guid transactionId, ICollection<PaymentModel> Payments)
+        public async Task<TransactionModel?> AddPayments(Guid transactionId, ICollection<PaymentModel> Payments)
         {
-            var result = await _transactionUpdatedClient.GetResponse<ITransactionResponse>(new
+            var (status, error) = await _transactionUpdatedClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = transactionId,
                 ArticlesToAdd = Array.Empty<ArticleModel>(),
                 PaymentsToAdd = Payments
             });
 
-            return result.Message.Transaction;
+            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }
 
-        public async Task<TransactionModel> Total(Guid transactionId)
+        public async Task<TransactionModel?> Total(Guid transactionId)
         {
-            var result = await _transactionUpdatedClient.GetResponse<ITransactionResponse>(new
+            var (status, error) = await _transactionUpdatedClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = transactionId,
                 SwitchToTotal = true
             });
 
-            return result.Message.Transaction;
+            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         } 
     }
 }
