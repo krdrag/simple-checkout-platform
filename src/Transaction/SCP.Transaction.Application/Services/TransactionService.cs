@@ -60,7 +60,8 @@ namespace SCP.Transaction.Application.Services
             var result = await _transactionUpdatedClient.GetResponse<ITransactionResponse>(new
             {
                 TransactionId = transactionId,
-                ArticlesToAdd = Articles
+                ArticlesToAdd = Articles,
+                PaymentsToAdd = Array.Empty<PaymentModel>()
             });
 
             return result.Message.Transaction;
@@ -71,6 +72,7 @@ namespace SCP.Transaction.Application.Services
             var result = await _transactionUpdatedClient.GetResponse<ITransactionResponse>(new
             {
                 TransactionId = transactionId,
+                ArticlesToAdd = Array.Empty<ArticleModel>(),
                 PaymentsToAdd = Payments
             });
 

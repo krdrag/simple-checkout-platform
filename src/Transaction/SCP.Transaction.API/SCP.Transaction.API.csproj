@@ -19,10 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middleware\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\Common\SCP.Common\SCP.Common.csproj" />
     <ProjectReference Include="..\SCP.Transaction.Application\SCP.Transaction.Application.csproj" />
   </ItemGroup>
 

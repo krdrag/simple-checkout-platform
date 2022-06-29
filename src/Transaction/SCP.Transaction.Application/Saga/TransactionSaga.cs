@@ -65,7 +65,7 @@ namespace SCP.Transaction.Application.Saga
                         x.Saga.Transaction.State = TransactionConstants.State.Finished;
                         x.Saga.Transaction.TimeFinished = DateTime.UtcNow;
                     })
-                    .RespondAsync(x => x.Init<TransactionModel>(new
+                    .RespondAsync(x => x.Init<ITransactionResponse>(new
                     {
                         x.Saga.Transaction
                     }))
