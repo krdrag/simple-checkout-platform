@@ -1,6 +1,8 @@
-﻿using MassTransit;
+﻿using FluentValidation.AspNetCore;
+using MassTransit;
 using SCP.Transaction.Application.Saga;
 using SCP.Transaction.Application.Services;
+using SCP.Transaction.Application.Validators;
 using SCP.Transaction.Domain.Constants;
 
 namespace SCP.Transaction.API.Extensions
@@ -39,11 +41,12 @@ namespace SCP.Transaction.API.Extensions
                     });
                 });
             });
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PaymentModelValidator>());
         }
 
         public static void AddCustomServices(this IServiceCollection services)
         {
-            
+
 
             // Repositories
 
