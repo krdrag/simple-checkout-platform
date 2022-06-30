@@ -1,4 +1,5 @@
 using SCP.Common.Middleware;
+using SCP.Common.Tools;
 using SCP.Transaction.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Load environment variables form .env.dev file
+DevEnvLoader.Load();
 
 builder.Services.AddExternalServices();
 builder.Services.AddCustomServices();

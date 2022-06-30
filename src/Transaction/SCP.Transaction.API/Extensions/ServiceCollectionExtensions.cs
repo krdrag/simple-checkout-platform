@@ -46,8 +46,6 @@ namespace SCP.Transaction.API.Extensions
 
         public static void AddCustomServices(this IServiceCollection services)
         {
-
-
             // Repositories
 
             // Services

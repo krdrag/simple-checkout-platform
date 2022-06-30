@@ -20,13 +20,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6FD6EA54-244C-444F-8F9C-10431FD681FF}"
 	ProjectSection(SolutionItems) = preProject
 		.env.dev = .env.dev
+		.env.docker = .env.docker
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A068712F-A1F2-454C-9AD6-4466DD4E5F54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.Common", "src\Common\SCP.Common\SCP.Common.csproj", "{3C8762BE-2C76-441B-858D-F85AE7EF2663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCP.Common", "src\Common\SCP.Common\SCP.Common.csproj", "{3C8762BE-2C76-441B-858D-F85AE7EF2663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP.MessageBus", "src\Common\SCP.MessageBus\SCP.MessageBus.csproj", "{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCP.MessageBus", "src\Common\SCP.MessageBus\SCP.MessageBus.csproj", "{9CF01C1B-1B1D-45D2-B003-19F1F68A11BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,12 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "RABBITMQ_DEFAULT_USER": "rmq",
-        "RABBITMQ_DEFAULT_PASS": "rmqpsw",
-        "RABBITMQ_HOST": "localhost",
-        "REDIS_PWD": "redis1",
-        "REDIS_HOST": "localhost:6379"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5001",
       "dotnetRunMessages": true
