@@ -34,7 +34,7 @@ namespace SCP.Transaction.Application.Services
             return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }
 
-        public async Task<TransactionModel?> StartTransaction(WorkstationDataModel wsModel)
+        public async Task<TransactionModel> StartTransaction(WorkstationDataModel wsModel)
         {
             var (status, error) = await _transactionStartClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
@@ -42,7 +42,7 @@ namespace SCP.Transaction.Application.Services
                 WorkstationData = wsModel
             });
 
-            return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
+            return status.Result.Message.Transaction;
         }
 
         public async Task<TransactionModel?> FinishTransaction(Guid transactionId)

@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using SCP.Transaction.Application.Models;
 using SCP.Transaction.Application.Saga.Events;
 using SCP.Transaction.Domain.Constants;
 using SCP.Transaction.Domain.Exceptions;

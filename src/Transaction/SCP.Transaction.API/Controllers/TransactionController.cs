@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SCP.Transaction.Application.Models;
 using SCP.Transaction.Application.Services;
+using System.Net;
 
 namespace SCP.Transaction.API.Controllers
 {
@@ -16,7 +17,9 @@ namespace SCP.Transaction.API.Controllers
         }
 
         [HttpGet("{id}")]
-        // TODO: add generate response type
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetTransaction(Guid id)
         {
             var result = await _transactionService.GetTransaction(id);
@@ -24,15 +27,18 @@ namespace SCP.Transaction.API.Controllers
         }
 
         [HttpPost("start")]
-        // TODO: add generate response type
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> StartTransaction([FromBody] WorkstationDataModel wsModel)
         {
             var result = await _transactionService.StartTransaction(wsModel);
-            return result != null ? Ok(result) : NotFound(null);
+            return Ok(result);
         }
 
         [HttpPost("finish/{id}")]
-        // TODO: add generate response type
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> FinishTransaction(Guid id)
         {
             var result = await _transactionService.FinishTransaction(id);
@@ -40,7 +46,9 @@ namespace SCP.Transaction.API.Controllers
         }
 
         [HttpPost("article/{id}")]
-        // TODO: add generate response type
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> AddArticles(Guid id, [FromBody] List<ArticleDataModel> articles)
         {
             var result = await _transactionService.AddArticles(id, articles);
@@ -48,7 +56,9 @@ namespace SCP.Transaction.API.Controllers
         }
 
         [HttpPost("payments/{id}")]
-        // TODO: add generate response type
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> AddPayments(Guid id, [FromBody] List<PaymentModel> payments)
         {
             var result = await _transactionService.AddPayments(id, payments);
@@ -56,7 +66,9 @@ namespace SCP.Transaction.API.Controllers
         }
 
         [HttpPost("total/{id}")]
-        // TODO: add generate response type
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Total(Guid id)
         {
             var result = await _transactionService.Total(id);
