@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using SCP.Common.Models;
 using SCP.Transaction.Application.Models;
 using SCP.Transaction.Application.Saga;
 using SCP.Transaction.Application.Saga.Events;
@@ -13,9 +14,9 @@ namespace SCP.Transaction.Application.Services
         private readonly IRequestClient<IOnTransactionGet> _transactionGetClient;
 
         public TransactionService(
-            IRequestClient<IOnTransactionStarted> transactionStartClient, 
-            IRequestClient<IOnTransactionFinished> transactionFinishClient, 
-            IRequestClient<IOnTransactionUpdated> transactionUpdatedClient, 
+            IRequestClient<IOnTransactionStarted> transactionStartClient,
+            IRequestClient<IOnTransactionFinished> transactionFinishClient,
+            IRequestClient<IOnTransactionUpdated> transactionUpdatedClient,
             IRequestClient<IOnTransactionGet> transactionGetClient)
         {
             _transactionStartClient = transactionStartClient;
@@ -88,6 +89,6 @@ namespace SCP.Transaction.Application.Services
             });
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
-        } 
+        }
     }
 }

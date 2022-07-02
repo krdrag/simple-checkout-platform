@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using SCP.Common.Constants;
 using SCP.Session.Application.Saga;
+using SCP.Session.Application.Services;
 
 namespace SCP.Session.API.Extensions
 {
@@ -45,6 +46,7 @@ namespace SCP.Session.API.Extensions
             // Repositories
 
             // Services
+            services.AddScoped<ISessionService, SessionService>();
         }
     }
 }

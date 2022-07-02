@@ -1,4 +1,5 @@
-﻿using SCP.Transaction.Application.Models;
+﻿using SCP.Common.Models;
+using SCP.Transaction.Application.Models;
 
 namespace SCP.Transaction.Application.Services
 {
