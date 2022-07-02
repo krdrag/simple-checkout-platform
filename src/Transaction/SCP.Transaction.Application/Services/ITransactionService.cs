@@ -18,9 +18,9 @@ namespace SCP.Transaction.Application.Services
         /// <summary>
         /// Start transaction a new transaction
         /// </summary>
-        /// <param name="wsModel">Workstation data needed to create new transaction</param>
+        /// <param name="wsModel">Id of session under which this transaction will be created</param>
         /// <returns>Transaction object</returns>
-        Task<TransactionModel> StartTransaction(WorkstationDataModel wsModel);
+        Task<TransactionModel> StartTransaction(Guid sessionId);
 
         /// <summary>
         /// Finish and remove transaction

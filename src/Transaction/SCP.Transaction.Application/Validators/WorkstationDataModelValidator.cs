@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SCP.Common.Models;
 using SCP.Transaction.Application.Models;
 using System.Text.RegularExpressions;
 

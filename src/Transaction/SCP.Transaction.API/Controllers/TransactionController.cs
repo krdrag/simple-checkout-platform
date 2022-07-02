@@ -30,9 +30,9 @@ namespace SCP.Transaction.API.Controllers
         [HttpPost("start")]
         [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> StartTransaction([FromBody] WorkstationDataModel wsModel)
+        public async Task<IActionResult> StartTransaction([FromBody] StartTransactionModel startTaModel)
         {
-            var result = await _transactionService.StartTransaction(wsModel);
+            var result = await _transactionService.StartTransaction(startTaModel.Sessionid);
             return Ok(result);
         }
 
