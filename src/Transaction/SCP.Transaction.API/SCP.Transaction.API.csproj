@@ -11,16 +11,12 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
-    <PackageReference Include="MassTransit.Abstractions" Version="8.0.3" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
-    <PackageReference Include="MassTransit.Redis" Version="8.0.3" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\SCP.Common\SCP.Common.csproj" />
     <ProjectReference Include="..\SCP.Transaction.Application\SCP.Transaction.Application.csproj" />
   </ItemGroup>
 

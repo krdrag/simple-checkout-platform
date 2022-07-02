@@ -1,7 +1,7 @@
 ﻿using MassTransit;
+using SCP.Common.Exceptions;
 using SCP.Transaction.Application.Saga.Events;
 using SCP.Transaction.Domain.Constants;
-using SCP.Transaction.Domain.Exceptions;
 
 namespace SCP.Transaction.Application.Saga
 {

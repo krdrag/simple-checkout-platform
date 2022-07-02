@@ -1,4 +1,4 @@
-﻿using SCP.Transaction.Application.Models;
+﻿using SCP.Common.Models;
 
 namespace SCP.Transaction.Application.Saga.Events
 {

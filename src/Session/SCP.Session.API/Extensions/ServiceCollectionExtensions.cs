@@ -1,11 +1,8 @@
-﻿using FluentValidation.AspNetCore;
-using MassTransit;
+﻿using MassTransit;
 using SCP.Common.Constants;
-using SCP.Transaction.Application.Saga;
-using SCP.Transaction.Application.Services;
-using SCP.Transaction.Application.Validators;
+using SCP.Session.Application.Saga;
 
-namespace SCP.Transaction.API.Extensions
+namespace SCP.Session.API.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -23,11 +20,11 @@ namespace SCP.Transaction.API.Extensions
 
             services.AddMassTransit(x =>
             {
-                x.AddSagaStateMachine<TransactionSaga, TransactionSagaState>()
+                x.AddSagaStateMachine<SessionSaga, SessionSagaState>()
                     .RedisRepository(r =>
                     {
                         r.DatabaseConfiguration(redisConnStr);
-                        r.KeyPrefix = "TransactionSagaState";
+                        r.KeyPrefix = "SessionSagaState";
                     });
 
                 x.UsingRabbitMq((context, cfg) =>
@@ -41,7 +38,6 @@ namespace SCP.Transaction.API.Extensions
                     });
                 });
             });
-            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PaymentModelValidator>());
         }
 
         public static void AddCustomServices(this IServiceCollection services)
@@ -49,7 +45,6 @@ namespace SCP.Transaction.API.Extensions
             // Repositories
 
             // Services
-            services.AddScoped<ITransactionService, TransactionService>();
         }
     }
 }

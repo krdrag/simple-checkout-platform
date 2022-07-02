@@ -1,4 +1,4 @@
-﻿namespace SCP.Transaction.Domain.Constants
+﻿namespace SCP.Common.Constants
 {
     public static class EnvironmentVariables
     {

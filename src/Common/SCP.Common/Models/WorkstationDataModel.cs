@@ -1,4 +1,4 @@
-﻿namespace SCP.Transaction.Application.Models
+﻿namespace SCP.Common.Models
 {
     public class WorkstationDataModel
     {

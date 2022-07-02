@@ -1,11 +1,10 @@
 using SCP.Common.Middleware;
 using SCP.Common.Tools;
-using SCP.Transaction.API.Extensions;
+using SCP.Session.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
