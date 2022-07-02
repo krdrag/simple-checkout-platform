@@ -13,4 +13,8 @@
     <PackageReference Include="MassTransit.Redis" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SCP.Common\SCP.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -28,6 +28,8 @@ namespace SCP.Session.API.Extensions
                         r.KeyPrefix = "SessionSagaState";
                     });
 
+                x.AddConsumers(typeof(ServiceCollectionExtensions).Assembly);
+
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.ConfigureEndpoints(context);
