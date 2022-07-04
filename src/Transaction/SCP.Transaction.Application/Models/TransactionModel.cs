@@ -5,6 +5,7 @@ namespace SCP.Transaction.Application.Models
     public class TransactionModel
     {
         public Guid TransactionId { get; set; }
+        public Guid Sessionid { get; set; }
         public string State { get; set; } = string.Empty;
         public DateTime TimeStarted { get; set; }
         public DateTime TimeFinished { get; set; }

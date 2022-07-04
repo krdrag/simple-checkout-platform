@@ -1,5 +1,4 @@
-﻿using SCP.Common.Models;
-using SCP.Transaction.Application.Models;
+﻿using SCP.Transaction.Application.Models;
 
 namespace SCP.Transaction.Application.Services
 {
@@ -14,6 +13,13 @@ namespace SCP.Transaction.Application.Services
         /// <param name="transactionId">Id of transaction</param>
         /// <returns>Transaction object</returns>
         Task<TransactionModel?> GetTransaction(Guid transactionId);
+
+        /// <summary>
+        /// Get list of transactions opened for provided session
+        /// </summary>
+        /// <param name="sessionId">Id of session</param>
+        /// <returns>List of transaction guids</returns>
+        Task<IEnumerable<string>> GetTransactionsForSession(Guid sessionId);
 
         /// <summary>
         /// Start transaction a new transaction

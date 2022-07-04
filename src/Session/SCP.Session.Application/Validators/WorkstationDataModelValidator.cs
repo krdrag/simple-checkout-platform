@@ -1,12 +1,14 @@
 ﻿using FluentValidation;
 using SCP.Common.Models;
-using SCP.Transaction.Application.Models;
 using System.Text.RegularExpressions;
 
-namespace SCP.Transaction.Application.Validators
+namespace SCP.Session.Application.Validators
 {
     public class WorkstationDataModelValidator : AbstractValidator<WorkstationDataModel>
     {
+        public const string StoreIdPattern = @"\d{4}";
+        public const string OperatorIdPattern = @"\d{3}";
+
         public WorkstationDataModelValidator()
         {
             var storeIdError = "Invalid store Id";
@@ -39,12 +41,12 @@ namespace SCP.Transaction.Application.Validators
 
         private bool IsValidStoreId(string storeId)
         {
-            return Regex.IsMatch(storeId, @"\d{4}");
+            return Regex.IsMatch(storeId, StoreIdPattern);
         }
 
         private bool IsValidCashierId(string storeId)
         {
-            return Regex.IsMatch(storeId, @"\d{3}");
+            return Regex.IsMatch(storeId, OperatorIdPattern);
         }
     }
 }

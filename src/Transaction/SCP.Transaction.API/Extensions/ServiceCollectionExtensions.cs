@@ -4,6 +4,9 @@ using SCP.Common.Constants;
 using SCP.Transaction.Application.Saga;
 using SCP.Transaction.Application.Services;
 using SCP.Transaction.Application.Validators;
+using SCP.Transaction.Domain.Interfaces;
+using SCP.Transaction.Infrastructure.Repositories;
+using StackExchange.Redis;
 
 namespace SCP.Transaction.API.Extensions
 {
@@ -12,10 +15,14 @@ namespace SCP.Transaction.API.Extensions
         public static void AddExternalServices(this IServiceCollection services)
         {
             var redisConnStr = $"{EnvironmentVariables.RedisHost},password={EnvironmentVariables.RedisPwd}";
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = redisConnStr;
-            });
+
+            var multiplexer = ConnectionMultiplexer.Connect(redisConnStr);
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+
+            //services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.Configuration = redisConnStr;
+            //});
 
             var rUsr = EnvironmentVariables.RabbitUserEnvVar;
             var rPwd = EnvironmentVariables.RabbitPassEnvVar;
@@ -47,6 +54,7 @@ namespace SCP.Transaction.API.Extensions
         public static void AddCustomServices(this IServiceCollection services)
         {
             // Repositories
+            services.AddScoped<ITransactionListCacheRepository, TransactionListCacheRepository>();
 
             // Services
             services.AddScoped<ITransactionService, TransactionService>();

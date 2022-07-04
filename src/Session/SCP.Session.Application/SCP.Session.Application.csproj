@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\SCP.Common\SCP.Common.csproj" />
     <ProjectReference Include="..\..\Common\SCP.MessageBus\SCP.MessageBus.csproj" />
     <ProjectReference Include="..\SCP.Session.Domain\SCP.Session.Domain.csproj" />

@@ -1,7 +1,9 @@
-﻿using MassTransit;
+﻿using FluentValidation.AspNetCore;
+using MassTransit;
 using SCP.Common.Constants;
 using SCP.Session.Application.Saga;
 using SCP.Session.Application.Services;
+using SCP.Session.Application.Validators;
 
 namespace SCP.Session.API.Extensions
 {
@@ -41,6 +43,8 @@ namespace SCP.Session.API.Extensions
                     });
                 });
             });
+
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<WorkstationDataModelValidator>());
         }
 
         public static void AddCustomServices(this IServiceCollection services)

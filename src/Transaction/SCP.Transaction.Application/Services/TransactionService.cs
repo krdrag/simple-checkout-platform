@@ -1,10 +1,10 @@
 ﻿using MassTransit;
 using SCP.Common.Exceptions;
-using SCP.Common.Models;
 using SCP.MessageBus.Session;
 using SCP.Transaction.Application.Models;
 using SCP.Transaction.Application.Saga;
 using SCP.Transaction.Application.Saga.Events;
+using SCP.Transaction.Domain.Interfaces;
 
 namespace SCP.Transaction.Application.Services
 {
@@ -17,18 +17,22 @@ namespace SCP.Transaction.Application.Services
 
         private readonly IRequestClient<GetSessionRequest> _sessionClient;
 
+        private readonly ITransactionListCacheRepository _transactionListRepository;
+
         public TransactionService(
-            IRequestClient<IOnTransactionStarted> transactionStartClient, 
-            IRequestClient<IOnTransactionFinished> transactionFinishClient, 
-            IRequestClient<IOnTransactionUpdated> transactionUpdatedClient, 
-            IRequestClient<IOnTransactionGet> transactionGetClient, 
-            IRequestClient<GetSessionRequest> sessionClient)
+            IRequestClient<IOnTransactionStarted> transactionStartClient,
+            IRequestClient<IOnTransactionFinished> transactionFinishClient,
+            IRequestClient<IOnTransactionUpdated> transactionUpdatedClient,
+            IRequestClient<IOnTransactionGet> transactionGetClient,
+            IRequestClient<GetSessionRequest> sessionClient,
+            ITransactionListCacheRepository transactionListRepository)
         {
             _transactionStartClient = transactionStartClient;
             _transactionFinishClient = transactionFinishClient;
             _transactionUpdatedClient = transactionUpdatedClient;
             _transactionGetClient = transactionGetClient;
             _sessionClient = sessionClient;
+            _transactionListRepository = transactionListRepository;
         }
 
         public async Task<TransactionModel?> GetTransaction(Guid transactionId)
@@ -39,6 +43,12 @@ namespace SCP.Transaction.Application.Services
             });
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
+        }
+
+        public async Task<IEnumerable<string>> GetTransactionsForSession(Guid sessionId)
+        {
+            return (await _transactionListRepository.GetAllTransactionsForSession(sessionId))
+                .Select(x => x.ToString());
         }
 
         public async Task<TransactionModel> StartTransaction(Guid sessionId)
@@ -54,8 +64,15 @@ namespace SCP.Transaction.Application.Services
             var (status, error) = await _transactionStartClient.GetResponse<ITransactionResponse, ITransactionNotFoundResponse>(new
             {
                 TransactionId = Guid.NewGuid(),
+                SessionId = sessionId,
                 WorkstationData = response.Message.Session.WorkstationData
             });
+
+            if (status.IsCompletedSuccessfully)
+            {
+                var transaction = status.Result.Message.Transaction;
+                await _transactionListRepository.RegisterTransaction(sessionId, transaction.TransactionId);
+            }
 
             return status.Result.Message.Transaction;
         }
@@ -66,6 +83,12 @@ namespace SCP.Transaction.Application.Services
             {
                 TransactionId = transactionId
             });
+
+            if (status.IsCompletedSuccessfully)
+            {
+                var transaction = status.Result.Message.Transaction;
+                await _transactionListRepository.RemoveTransaction(transaction.Sessionid, transaction.TransactionId);
+            }
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
         }

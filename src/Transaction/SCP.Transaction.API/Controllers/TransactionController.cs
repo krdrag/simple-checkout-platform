@@ -27,6 +27,16 @@ namespace SCP.Transaction.API.Controllers
             return result != null ? Ok(result) : NotFound(null);
         }
 
+        [HttpGet("all/{sessionId}")]
+        [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetTransactionsForSession(Guid sessionId)
+        {
+            var result = await _transactionService.GetTransactionsForSession(sessionId);
+            return result != null ? Ok(result) : NotFound(null);
+        }
+
         [HttpPost("start")]
         [ProducesResponseType(typeof(TransactionModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
