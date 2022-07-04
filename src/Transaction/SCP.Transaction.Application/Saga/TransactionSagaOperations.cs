@@ -13,6 +13,7 @@ namespace SCP.Transaction.Application.Saga
                 context.Saga.Transaction = new Models.TransactionModel
                 {
                     TransactionId = context.Message.TransactionId,
+                    Sessionid = context.Message.SessionId,
                     TimeStarted = DateTime.Now,
                     WorkstationData = context.Message.WorkstationData,
                     State = TransactionConstants.State.Started

@@ -33,6 +33,7 @@ namespace SCP.Session.Application.Saga
                 When(OnStart)
                     .Then(x => throw new IncorrectSagaStateException()),
                 When(OnFinish)
+                    .Then(SessionSagaOperations.FinishSession)
                     .RespondAsync(x => x.Init<ISessionResponse>(new
                     {
                         x.Saga.Session

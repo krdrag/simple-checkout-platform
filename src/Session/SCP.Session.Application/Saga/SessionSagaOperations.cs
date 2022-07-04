@@ -15,5 +15,10 @@ namespace SCP.Session.Application.Saga
                 WorkstationData = context.Message.WorkstationData
             };
         }
+
+        public static void FinishSession(BehaviorContext<SessionSagaState, IOnSessionFinished> context)
+        {
+            context.Saga.Session.TimeFinished = DateTime.Now;
+        }
     }
 }
