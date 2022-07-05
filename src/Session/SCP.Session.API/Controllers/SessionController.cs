@@ -35,7 +35,7 @@ namespace SCP.Session.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("finish/{id}")]
+        [HttpDelete("finish/{id}")]
         [ProducesResponseType(typeof(SessionModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
@@ -43,6 +43,15 @@ namespace SCP.Session.API.Controllers
         {
             var result = await _sessionService.FinishSession(id);
             return result != null ? Ok(result) : NotFound(null);
+        }
+
+        [HttpDelete("clear/{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> ClearSession(Guid id)
+        {
+            await _sessionService.ClearSession(id);
+            return Ok();
         }
     }
 }

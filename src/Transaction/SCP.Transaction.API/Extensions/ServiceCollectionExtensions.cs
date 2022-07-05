@@ -19,11 +19,6 @@ namespace SCP.Transaction.API.Extensions
             var multiplexer = ConnectionMultiplexer.Connect(redisConnStr);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
-            //services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = redisConnStr;
-            //});
-
             var rUsr = EnvironmentVariables.RabbitUserEnvVar;
             var rPwd = EnvironmentVariables.RabbitPassEnvVar;
             var rHost = EnvironmentVariables.RabbitHostVar;
@@ -36,6 +31,8 @@ namespace SCP.Transaction.API.Extensions
                         r.DatabaseConfiguration(redisConnStr);
                         r.KeyPrefix = "TransactionSagaState";
                     });
+
+                x.AddConsumers(typeof(ServiceCollectionExtensions).Assembly);
 
                 x.UsingRabbitMq((context, cfg) =>
                 {

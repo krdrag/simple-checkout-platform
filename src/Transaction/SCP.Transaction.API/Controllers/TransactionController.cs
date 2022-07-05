@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SCP.Common.Models;
 using SCP.Transaction.Application.Models;
 using SCP.Transaction.Application.Services;
 using System.Net;

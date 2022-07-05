@@ -32,5 +32,12 @@ namespace SCP.Session.Application.Services
         /// <param name="id">Session Id</param>
         /// <returns>Session object</returns>
         Task<SessionModel?> GetSession(Guid id);
+
+        /// <summary>
+        /// Remove tracking of all transactions assigned to provided session (transactions are not removed from redis but no longer are tracked by session)
+        /// </summary>
+        /// <param name="id">Session id</param>
+        /// <returns></returns>
+        Task ClearSession(Guid id);
     }
 }

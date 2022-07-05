@@ -29,10 +29,6 @@ namespace SCP.Transaction.Infrastructure.Repositories
 
         public async Task RegisterTransaction(Guid sessionId, Guid transactionId)
         {
-            //var taList = (await GetAllTransactionsForSession(sessionId)).ToList();
-
-            //taList.Add(transactionId);
-
             var db = _redis.GetDatabase();
 
             await db.SetAddAsync($"{CacheKey}:{sessionId}", transactionId.ToString());
@@ -43,6 +39,18 @@ namespace SCP.Transaction.Infrastructure.Repositories
             var db = _redis.GetDatabase();
 
             await db.SetRemoveAsync($"{CacheKey}:{sessionId}", transactionId.ToString());
+        }
+
+        public async Task ClearTransactionList(Guid sessionId)
+        {
+            var db = _redis.GetDatabase();
+
+            var transactions = await GetAllTransactionsForSession(sessionId);
+
+            foreach (var transaction in transactions)
+            {
+                await db.SetRemoveAsync($"{CacheKey}:{sessionId}", transaction);
+            }
         }
     }
 }

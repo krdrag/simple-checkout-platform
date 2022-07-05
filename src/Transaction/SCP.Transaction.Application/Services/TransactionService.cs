@@ -51,6 +51,11 @@ namespace SCP.Transaction.Application.Services
                 .Select(x => x.ToString());
         }
 
+        public async Task ClearTransactionList(Guid sessionId)
+        {
+            await _transactionListRepository.ClearTransactionList(sessionId);
+        }
+
         public async Task<TransactionModel> StartTransaction(Guid sessionId)
         {
             var response = await _sessionClient.GetResponse<GetSessionResponse>(new GetSessionRequest

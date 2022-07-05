@@ -22,6 +22,13 @@ namespace SCP.Transaction.Application.Services
         Task<IEnumerable<string>> GetTransactionsForSession(Guid sessionId);
 
         /// <summary>
+        /// Remove tracking of all transactions assigned to provided session (transactions are not removed from redis but no longer are tracked by session)
+        /// </summary>
+        /// <param name="id">Session id</param>
+        /// <returns></returns>
+        Task ClearTransactionList(Guid sessionId);
+
+        /// <summary>
         /// Start transaction a new transaction
         /// </summary>
         /// <param name="wsModel">Id of session under which this transaction will be created</param>
