@@ -16,6 +16,12 @@ DevEnvLoader.Load();
 builder.Services.AddExternalServices();
 builder.Services.AddCustomServices();
 
+builder.Services.AddAuthentication("Bearer")
+    .AddIdentityServerAuthentication("Bearer", options => {
+        options.ApiName = "weatherapi";
+        options.Authority = "https://localhost:6100";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseExceptionMiddleware();
