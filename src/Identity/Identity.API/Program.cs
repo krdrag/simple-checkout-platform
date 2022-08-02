@@ -14,6 +14,6 @@ var app = builder.Build();
 
 app.UseIdentityServer();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Identity server is running...");
 
 app.Run();

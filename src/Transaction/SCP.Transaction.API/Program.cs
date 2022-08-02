@@ -18,7 +18,7 @@ builder.Services.AddCustomServices();
 
 builder.Services.AddAuthentication("Bearer")
     .AddIdentityServerAuthentication("Bearer", options => {
-        options.ApiName = "weatherapi";
+        options.ApiName = "SCP.Transaction";
         options.Authority = "https://localhost:6100";
     });
 
