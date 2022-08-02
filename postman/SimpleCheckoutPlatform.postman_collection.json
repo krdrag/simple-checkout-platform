@@ -1,10 +1,110 @@
 {
 	"info": {
-		"_postman_id": "ad3eacb7-b041-4514-bf59-e481f8e3c9e4",
+		"_postman_id": "5376ee52-605f-4a03-aebb-42a2f83201b4",
 		"name": "SimpleCheckoutPlatform",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "OpenAuthConfig",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:6100/.well-known/openid-configuration",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "6100",
+							"path": [
+								".well-known",
+								"openid-configuration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cashier SignIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonResponse = pm.response.json();\r",
+									"pm.environment.set(\"Token\", jsonResponse.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "SCP.read openid",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "Postman",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "SuperSecretPassword",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "StoreManager",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:6100/connect/token",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "6100",
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Session",
 			"item": [
@@ -86,7 +186,7 @@
 						}
 					],
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:{{SessionServicePort}}/api/session/finish/{{SessionId}}",
@@ -113,6 +213,16 @@
 				{
 					"name": "Get Transaction",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IkFCMzlEMzk5NkJCNkVDNzFEMUUxNjY4MEY1MzNBMjVEIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2NTk0NTY3OTEsImV4cCI6MTY1OTQ2MDM5MSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NjEwMCIsImF1ZCI6IlNDUC5UcmFuc2FjdGlvbiIsImNsaWVudF9pZCI6IlBvc3RtYW4iLCJzdWIiOiI4MTg3MjciLCJhdXRoX3RpbWUiOjE2NTk0NTY3OTEsImlkcCI6ImxvY2FsIiwicm9sZSI6InN0b3JlX21hbmFnZXIiLCJqdGkiOiIyQzk3NTA2MkJEN0Q4NEYyNTFBQjA5NjdENjY1MEFFMCIsImlhdCI6MTY1OTQ1Njc5MSwic2NvcGUiOlsib3BlbmlkIiwiU0NQLnJlYWQiXSwiYW1yIjpbInB3ZCJdfQ.4JFBOPICz6HK-WRi3xsMjYzS-Ve_WEnHDE4XGakTFAxSDgp4b8nm-sKP-_04yLl4O4CVzwyKWypSJ6PPFSmep7tr3Jj0icyt_Hov4NdsjFiyTCPxuOPfE9B_Q4Ow8rXxgb3F_KA7BbKB7xV9GojNiow8SBgIHWcgh4myED7WLmtSDX6RACsD3Qex8NT8_HXUd3-i3OJoSk6YG8g9ifm4LqbjtmC_bc97wG3jTHIbn_M9awH7pT7a1qkL3E_uNF6v5PfPWTUUZP_eqZkXswJILqs0dNiW_nF_4T_w4kqqQFsV88HBmFVxx_tZ-SU8T2oy6U0QZlnmSJ8j9nFuoDBjOQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
