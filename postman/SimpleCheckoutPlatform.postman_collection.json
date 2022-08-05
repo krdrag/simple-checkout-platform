@@ -245,7 +245,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{TransactionServicePort}}/api/Transaction/{{TransactionId}}",
+							"raw": "http://localhost:{{TransactionServicePort}}/api/transaction/{{TransactionId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -253,7 +253,7 @@
 							"port": "{{TransactionServicePort}}",
 							"path": [
 								"api",
-								"Transaction",
+								"transaction",
 								"{{TransactionId}}"
 							]
 						}
@@ -481,6 +481,461 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "Identity",
+					"item": [
+						{
+							"name": "Cashier SignIn",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonResponse = pm.response.json();\r",
+											"pm.environment.set(\"Token\", jsonResponse.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "SCP.read openid",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "Postman",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{ClientPassword}}",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "{{TestUserName}}",
+											"type": "default"
+										},
+										{
+											"key": "password",
+											"value": "{{TestUserPassword}}",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7004/operator/token",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"operator",
+										"token"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Session Copy",
+					"item": [
+						{
+							"name": "Get Session",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7004/session/{{SessionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"session",
+										"{{SessionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Start Session",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"SessionId\", jsonData.sessionId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"storeId\": \"9999\",\r\n  \"posId\": 1,\r\n  \"cashierId\": \"001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7004/session/start",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"session",
+										"start"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Finish Session",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7004/session/finish/{{SessionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"session",
+										"finish",
+										"{{SessionId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{Token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Transaction Copy",
+					"item": [
+						{
+							"name": "Get Transaction",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7004/transaction/{{TransactionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"transaction",
+										"{{TransactionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Start Transaction",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"TransactionId\", jsonData.transactionId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"sessionId\": \"{{SessionId}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7004/Transaction/start",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"Transaction",
+										"start"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Article to Transaction",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"name\": \"Test Article\",\r\n    \"ean\": \"111000032\",\r\n    \"description\": \"Some test article\",\r\n    \"price\": 9.99,\r\n    \"size\": \"Small\",\r\n    \"color\": \"Blue\",\r\n    \"articleCategory\": \"Misc\"\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7004/Transaction/article/{{TransactionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"Transaction",
+										"article",
+										"{{TransactionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change To Total",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7004/Transaction/total/{{TransactionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"Transaction",
+										"total",
+										"{{TransactionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Payment To Transaction",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"paymentMediaId\": 1,\r\n    \"amount\": 5\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7004/Transaction/payments/{{TransactionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"Transaction",
+										"payments",
+										"{{TransactionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Finish Transaction",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7004/Transaction/finish/{{TransactionId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7004",
+									"path": [
+										"Transaction",
+										"finish",
+										"{{TransactionId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{Token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				}
 			]
 		}
