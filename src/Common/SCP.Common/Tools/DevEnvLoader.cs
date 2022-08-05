@@ -1,14 +1,14 @@
 ﻿namespace SCP.Common.Tools
 {
     /// <summary>
-    /// Load .env.dev file. Loads all varaibles into environment.
+    /// Load .env.dev file. Loads all variables into environment.
     /// Used only for services running locally.
     /// </summary>
     public static class DevEnvLoader
     {
         private static readonly string ASP_ENVVARIABLE = "ASPNETCORE_ENVIRONMENT";
         private static readonly string ASP_DEVELOPMENT_ENV = "Development";
-        private static readonly string[] _defaultKeysToIgnore = new string[] { };
+        private static readonly string[] _defaultKeysToIgnore = Array.Empty<string>();
 
         public static void Load(IEnumerable<string>? providedKeysToIgnore = null)
         {
