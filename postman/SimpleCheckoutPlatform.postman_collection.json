@@ -68,17 +68,17 @@
 								},
 								{
 									"key": "client_secret",
-									"value": "SuperSecretPassword",
+									"value": "{{ClientPassword}}",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "StoreManager",
+									"value": "{{TestUserName}}",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "1234",
+									"value": "{{TestUserPassword}}",
 									"type": "default"
 								}
 							],
@@ -178,8 +178,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var jsonData = JSON.parse(responseBody);\r",
-									"postman.setEnvironmentVariable(\"TransactionId\", jsonData.transactionId);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -205,6 +204,36 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -213,16 +242,6 @@
 				{
 					"name": "Get Transaction",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IkFCMzlEMzk5NkJCNkVDNzFEMUUxNjY4MEY1MzNBMjVEIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2NTk0NTY3OTEsImV4cCI6MTY1OTQ2MDM5MSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NjEwMCIsImF1ZCI6IlNDUC5UcmFuc2FjdGlvbiIsImNsaWVudF9pZCI6IlBvc3RtYW4iLCJzdWIiOiI4MTg3MjciLCJhdXRoX3RpbWUiOjE2NTk0NTY3OTEsImlkcCI6ImxvY2FsIiwicm9sZSI6InN0b3JlX21hbmFnZXIiLCJqdGkiOiIyQzk3NTA2MkJEN0Q4NEYyNTFBQjA5NjdENjY1MEFFMCIsImlhdCI6MTY1OTQ1Njc5MSwic2NvcGUiOlsib3BlbmlkIiwiU0NQLnJlYWQiXSwiYW1yIjpbInB3ZCJdfQ.4JFBOPICz6HK-WRi3xsMjYzS-Ve_WEnHDE4XGakTFAxSDgp4b8nm-sKP-_04yLl4O4CVzwyKWypSJ6PPFSmep7tr3Jj0icyt_Hov4NdsjFiyTCPxuOPfE9B_Q4Ow8rXxgb3F_KA7BbKB7xV9GojNiow8SBgIHWcgh4myED7WLmtSDX6RACsD3Qex8NT8_HXUd3-i3OJoSk6YG8g9ifm4LqbjtmC_bc97wG3jTHIbn_M9awH7pT7a1qkL3E_uNF6v5PfPWTUUZP_eqZkXswJILqs0dNiW_nF_4T_w4kqqQFsV88HBmFVxx_tZ-SU8T2oy6U0QZlnmSJ8j9nFuoDBjOQ",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -432,6 +451,36 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
