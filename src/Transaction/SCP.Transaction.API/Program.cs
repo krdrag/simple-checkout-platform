@@ -16,12 +16,6 @@ DevEnvLoader.Load();
 builder.Services.AddExternalServices();
 builder.Services.AddCustomServices();
 
-builder.Services.AddAuthentication("Bearer")
-    .AddIdentityServerAuthentication("Bearer", options => {
-        options.ApiName = "SCP.Transaction";
-        options.Authority = "https://localhost:6100";
-    });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

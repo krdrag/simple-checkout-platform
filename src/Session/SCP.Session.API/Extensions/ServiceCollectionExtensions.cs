@@ -45,6 +45,12 @@ namespace SCP.Session.API.Extensions
             });
 
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<WorkstationDataModelValidator>());
+
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication("Bearer", options => {
+                    options.ApiName = "SCP.Session";
+                    options.Authority = "https://localhost:6100";
+                });
         }
 
         public static void AddCustomServices(this IServiceCollection services)

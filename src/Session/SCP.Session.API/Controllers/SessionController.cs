@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SCP.Common.Models;
 using SCP.Session.Application.Services;
 using System.Net;
@@ -7,6 +8,7 @@ namespace SCP.Session.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = $"cashier, store_manager")]
     public class SessionController : ControllerBase
     {
         private readonly ISessionService _sessionService;

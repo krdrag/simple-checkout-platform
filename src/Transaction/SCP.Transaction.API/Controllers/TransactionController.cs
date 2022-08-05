@@ -8,7 +8,7 @@ namespace SCP.Transaction.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "cashier, store_manager")]
+    [Authorize(Roles = $"cashier, store_manager")]
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
