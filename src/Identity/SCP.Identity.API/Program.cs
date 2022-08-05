@@ -1,6 +1,10 @@
 using Identity.API;
+using SCP.Common.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Load environment variables form .env.dev file (if in development mode)
+DevEnvLoader.Load();
 
 builder.Services.AddIdentityServer()
     .AddInMemoryClients(Config.Clients)
