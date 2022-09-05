@@ -49,7 +49,9 @@ namespace SCP.Session.API.Extensions
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication("Bearer", options => {
                     options.ApiName = "SCP.Session";
-                    options.Authority = "https://localhost:6100";
+                    options.Authority = "http://scp.identity.api";
+                    // TODO: For dev purpose
+                    options.RequireHttpsMetadata = false;
                 });
         }
 

@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>a1201000-f059-428a-a6d6-83b93f1462cf</ProjectGuid>
+    <ProjectGuid>8c656260-cc95-4bdc-9fc8-f4fbb7d8038d</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>scp.transaction.api</DockerServiceName>

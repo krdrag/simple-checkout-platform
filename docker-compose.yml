@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  rabbitmq3:
+  rabbitmq:
     container_name: "rabbitmq"
     image: rabbitmq:3.8-management-alpine
     ports:
@@ -25,18 +25,42 @@ services:
     volumes: 
     - redis-cache:/data
 
+  scp.identity.api:
+    container_name: scp-identity
+    image: ${DOCKER_REGISTRY-}scpidentityapi
+    ports:
+    - "5100:80"
+    - "6100:443"
+    env_file:
+    - '.env.docker'
+    build:
+      context: .
+      dockerfile: src/Identity/SCP.Identity.API/Dockerfile
+
+  scp.session.api:
+    container_name: scp-session
+    image: ${DOCKER_REGISTRY-}scpsessionapi
+    ports:
+    - "5002:80"
+    env_file:
+    - '.env.docker'
+    build:
+      context: .
+      dockerfile: src/Session/SCP.Session.API/Dockerfile
+
+  scp.transaction.api:
+    container_name: scp-transaction
+    image: ${DOCKER_REGISTRY-}scptransactionapi
+    ports:
+    - "5001:80"
+    env_file:
+    - '.env.docker'
+    build:
+      context: .
+      dockerfile: src/Transaction/SCP.Transaction.API/Dockerfile
 
 volumes:
   rabbitdata:
   rabbitlogs:
   redis-cache:
     driver: local
-
-
-
-
-  #scp.transaction.api:
-  #  image: ${DOCKER_REGISTRY-}scptransactionapi
-  #  build:
-  #    context: .
-  #    dockerfile: src/Transaction/SCP.Transaction.API/Dockerfile

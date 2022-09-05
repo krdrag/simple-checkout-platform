@@ -19,10 +19,6 @@ namespace SCP.Transaction.API.Extensions
             var multiplexer = ConnectionMultiplexer.Connect(redisConnStr);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
-            var rUsr = EnvironmentVariables.RabbitUserEnvVar;
-            var rPwd = EnvironmentVariables.RabbitPassEnvVar;
-            var rHost = EnvironmentVariables.RabbitHostVar;
-
             services.AddMassTransit(x =>
             {
                 x.AddSagaStateMachine<TransactionSaga, TransactionSagaState>()

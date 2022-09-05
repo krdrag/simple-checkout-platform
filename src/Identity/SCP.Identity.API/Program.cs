@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Load environment variables form .env.dev file (if in development mode)
 DevEnvLoader.Load();
 
-builder.Services.AddIdentityServer()
+builder.Services.AddIdentityServer( x => 
+        x.IssuerUri = "http://scp.identity.api")
     .AddInMemoryClients(Config.Clients)
     .AddInMemoryIdentityResources(Config.IdentityResources)
     .AddInMemoryApiResources(Config.ApiResources)
