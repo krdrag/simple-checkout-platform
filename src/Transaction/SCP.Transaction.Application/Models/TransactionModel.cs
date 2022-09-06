@@ -12,5 +12,6 @@ namespace SCP.Transaction.Application.Models
         public WorkstationDataModel WorkstationData { get; set; } = new WorkstationDataModel();
         public ICollection<ArticleModel> Articles { get; set; } = Array.Empty<ArticleModel>();
         public ICollection<PaymentModel> Payments { get; set; } = Array.Empty<PaymentModel>();
+        public TotalModel Total { get; set; } = new TotalModel() { Total = 0, NetAmount = 0, TaxAmount = 0 };
     }
 }
