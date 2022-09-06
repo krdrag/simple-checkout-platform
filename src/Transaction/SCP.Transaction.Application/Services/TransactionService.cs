@@ -83,7 +83,7 @@ namespace SCP.Transaction.Application.Services
             else
             {
                 var errorResp = error.Result.Message;
-                throw new BaseException(errorResp.ErrorCode, errorResp.Message);
+                throw new BaseException(errorResp.Code, errorResp.Message);
             }
 
             return status.Result.Message.Transaction;
@@ -104,7 +104,7 @@ namespace SCP.Transaction.Application.Services
             else
             {
                 var errorResp = error.Result.Message;
-                throw new BaseException(errorResp.ErrorCode, errorResp.Message);
+                throw new BaseException(errorResp.Code, errorResp.Message);
             }
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Transaction : null;
@@ -156,7 +156,7 @@ namespace SCP.Transaction.Application.Services
             if (!status.IsCompletedSuccessfully)
             {
                 var errorResp = error.Result.Message;
-                throw new BaseException(errorResp.ErrorCode, errorResp.Message);
+                throw new BaseException(errorResp.Code, errorResp.Message);
             }
         }
     }

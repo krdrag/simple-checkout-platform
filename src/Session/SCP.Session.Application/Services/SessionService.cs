@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using SCP.Common.Exceptions;
 using SCP.Common.Models;
 using SCP.MessageBus.Transaction;
 using SCP.Session.Application.Saga;
@@ -32,11 +33,17 @@ namespace SCP.Session.Application.Services
 
         public async Task<SessionModel?> StartSession(WorkstationDataModel wsModel)
         {
-            var (status, error) = await _sessionStartClient.GetResponse<ISessionResponse, ISessionNotFoundResponse>(new
+            var (status, error) = await _sessionStartClient.GetResponse<ISessionResponse, ISagaError>(new
             {
                 SessionId = Guid.NewGuid(),
                 WorkstationData = wsModel
             });
+
+            if (!status.IsCompletedSuccessfully)
+            {
+                var errorResp = error.Result.Message;
+                throw new BaseException(errorResp.Code, errorResp.Message);
+            }
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Session : null;
         }
@@ -49,25 +56,37 @@ namespace SCP.Session.Application.Services
             });
 
             if (result == null || result.Message == null || result.Message.TransactionList == null)
-                throw new MessageException();
+                throw new Common.Exceptions.MessageException();
 
             if (result.Message.TransactionList.Any())
                 throw new SessionCannotBeClosedException();
 
-            var (status, error) = await _sessionFinishClient.GetResponse<ISessionResponse, ISessionNotFoundResponse>(new
+            var (status, error) = await _sessionFinishClient.GetResponse<ISessionResponse, ISagaError>(new
             {
                 SessionId = id,
             });
+
+            if (!status.IsCompletedSuccessfully)
+            {
+                var errorResp = error.Result.Message;
+                throw new BaseException(errorResp.Code, errorResp.Message);
+            }
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Session : null;
         }
 
         public async Task<SessionModel?> GetSession(Guid id)
         {
-            var (status, error) = await _sessionRequestClient.GetResponse<ISessionResponse, ISessionNotFoundResponse>(new
+            var (status, error) = await _sessionRequestClient.GetResponse<ISessionResponse, ISagaError>(new
             {
                 SessionId = id,
             });
+
+            if(!status.IsCompletedSuccessfully)
+            {
+                var errorResp = error.Result.Message;
+                throw new BaseException(errorResp.Code, errorResp.Message);
+            }
 
             return status.IsCompletedSuccessfully ? status.Result.Message.Session : null;
         }
