@@ -1,4 +1,5 @@
 using Identity.API;
+using SCP.Common.Constants;
 using SCP.Common.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 DevEnvLoader.Load();
 
 builder.Services.AddIdentityServer( x => 
-        x.IssuerUri = "http://scp.identity.api")
+        x.IssuerUri = EnvironmentVariables.IdentityAuthority)
     .AddInMemoryClients(Config.Clients)
     .AddInMemoryIdentityResources(Config.IdentityResources)
     .AddInMemoryApiResources(Config.ApiResources)
