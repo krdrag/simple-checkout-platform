@@ -67,26 +67,20 @@ namespace SCP.Transaction.Application.Saga
                 if (context.Message.PaymentsToAdd == null)
                     return;
 
+                var total = context.Saga.Transaction.Total;
+
                 foreach (var payment in context.Message.PaymentsToAdd)
                 {
                     payment.LineNumber = ++context.Saga.CurrentLineNumber;
                     context.Saga.Transaction.Payments.Add(payment);
+
+                    total.TotalPaid += payment.Amount;
                 }
             };
         }
 
         public static bool IsTotalPaid(TransactionModel transaction)
-        {
-            var total = transaction.Total;
-            var paid = 0m;
-
-            foreach (var payment in transaction.Payments)
-            {
-                paid += payment.Amount;
-            }
-
-            return paid == total.Total;
-        }
+            => transaction.Total.Total == transaction.Total.TotalPaid;
 
         private static void RecalcaulateTotal(TransactionModel transaction)
         {
