@@ -17,10 +17,6 @@ namespace SCP.Session.API.Extensions
                 options.Configuration = redisConnStr;
             });
 
-            var rUsr = EnvironmentVariables.RabbitUserEnvVar;
-            var rPwd = EnvironmentVariables.RabbitPassEnvVar;
-            var rHost = EnvironmentVariables.RabbitHostVar;
-
             services.AddMassTransit(x =>
             {
                 x.AddSagaStateMachine<SessionSaga, SessionSagaState>()
@@ -49,8 +45,8 @@ namespace SCP.Session.API.Extensions
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication("Bearer", options => {
                     options.ApiName = "SCP.Session";
-                    options.Authority = "http://scp.identity.api";
-                    // TODO: For dev purpose
+                    options.Authority = EnvironmentVariables.IdentityAuthority;
+                    // For now disable requirement for https
                     options.RequireHttpsMetadata = false;
                 });
         }

@@ -46,7 +46,9 @@ namespace SCP.Transaction.API.Extensions
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication("Bearer", options => {
                     options.ApiName = "SCP.Transaction";
-                    options.Authority = "https://localhost:6100";
+                    options.Authority = EnvironmentVariables.IdentityAuthority;
+                    // For now disable requirement for https
+                    options.RequireHttpsMetadata = false;
                 });
         }
 
