@@ -16,7 +16,7 @@ namespace SCP.Session.API.Extensions
             {
                 options.Configuration = redisConnStr;
             });
-            a
+
             services.AddMassTransit(x =>
             {
                 x.AddSagaStateMachine<SessionSaga, SessionSagaState>()
