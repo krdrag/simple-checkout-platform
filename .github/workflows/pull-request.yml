@@ -1,6 +1,9 @@
 name: Pull Request
 
-on: workflow_dispatch
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches: [ develop, main, 'release/**' ]
 
 jobs:
   build-scp-services:
