@@ -1,0 +1,25 @@
+name: Pull Request
+
+on: workflow_dispatch
+
+jobs:
+  build-scp-services:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.7
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore simple-checkout-platform.sln
+    - name: Build
+      run: dotnet build simple-checkout-platform.sln --configuration Debug --no-restore
