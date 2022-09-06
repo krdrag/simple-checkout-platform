@@ -13,9 +13,9 @@
 
         // Identity
         public static string IdentityAuthority => Environment.GetEnvironmentVariable("IDENTITY_AUTHORITY") ?? throw new KeyNotFoundException("Authority variable not found!");
-        public static string POSClientPasswordEnvVar => Environment.GetEnvironmentVariable("POS_CLIENT_PASSWORD") ?? throw new KeyNotFoundException("Pos client password environment variable not found!");
-        public static string PostmanClientPasswordEnvVar => Environment.GetEnvironmentVariable("POSTMAN_CLIENT_PASSWORD") ?? throw new KeyNotFoundException("Postman client password host environment variable not found!");
-        public static string TransactionResourceEnvVar => Environment.GetEnvironmentVariable("TRANSACTION_RESOURCE_PASSWORD") ?? throw new KeyNotFoundException("Transaction service client password host environment variable not found!");
-        public static string SessionResourceEnvVar => Environment.GetEnvironmentVariable("SESSION_RESOURCE_PASSWORD") ?? throw new KeyNotFoundException("Session service client password environment variable not found!");
+        public static string POSClientPasswordEnvVar => Environment.GetEnvironmentVariable("IDENTITY_POS_CLIENT_PASSWORD") ?? throw new KeyNotFoundException("Pos client password environment variable not found!");
+        public static string PostmanClientPasswordEnvVar => Environment.GetEnvironmentVariable("IDENTITY_POSTMAN_CLIENT_PASSWORD") ?? throw new KeyNotFoundException("Postman client password host environment variable not found!");
+        public static string TransactionResourceEnvVar => Environment.GetEnvironmentVariable("IDENTITY_TRANSACTION_RESOURCE_PASSWORD") ?? throw new KeyNotFoundException("Transaction service client password host environment variable not found!");
+        public static string SessionResourceEnvVar => Environment.GetEnvironmentVariable("IDENTITY_SESSION_RESOURCE_PASSWORD") ?? throw new KeyNotFoundException("Session service client password environment variable not found!");
     }
 }
