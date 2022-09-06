@@ -6,17 +6,13 @@
     /// </summary>
     public static class DevEnvLoader
     {
-        private static readonly string ASP_ENVVARIABLE = "ASPNETCORE_ENVIRONMENT";
-        private static readonly string ASP_DEVELOPMENT_ENV = "Development";
         private static readonly string[] _defaultKeysToIgnore = Array.Empty<string>();
 
         public static void Load(IEnumerable<string>? providedKeysToIgnore = null)
         {
             var keysToIgnore = _defaultKeysToIgnore;
 
-            var environmentName = Environment.GetEnvironmentVariable(ASP_ENVVARIABLE);
-
-            if (!environmentName?.Equals(ASP_DEVELOPMENT_ENV) ?? true)
+            if (!EnvironmentCheck.IsDevEnv())
                 return;
 
             if (providedKeysToIgnore != null && providedKeysToIgnore.Any())
