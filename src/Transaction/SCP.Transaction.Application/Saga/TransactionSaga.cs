@@ -32,9 +32,17 @@ namespace SCP.Transaction.Application.Saga
 
             During(Started,
                 When(OnStart)
-                    .Then(x => throw new IncorrectSagaStateException()),
+                    .RespondAsync(x => x.Init<ISagaError>(new
+                    {
+                        ExceptionCodes.SagaIncorrectState.Code,
+                        ExceptionCodes.SagaIncorrectState.Message
+                    })),
                 When(OnFinish)
-                    .Then(x => throw new IncorrectSagaStateException()),
+                    .RespondAsync(x => x.Init<ISagaError>(new
+                    {
+                        ExceptionCodes.SagaIncorrectState.Code,
+                        ExceptionCodes.SagaIncorrectState.Message
+                    })),
                 When(OnUpdate, context => !context.Message.SwitchToTotal)
                     .Then(TransactionSagaOperations.AddArticles())
                     .RespondAsync(x => x.Init<ITransactionResponse>(new
@@ -51,14 +59,24 @@ namespace SCP.Transaction.Application.Saga
 
             During(Total,
                 When(OnStart)
-                    .Then(x => throw new IncorrectSagaStateException()),
-                 When(OnUpdate)
+                    .RespondAsync(x => x.Init<ISagaError>(new
+                    {
+                        ExceptionCodes.SagaIncorrectState.Code,
+                        ExceptionCodes.SagaIncorrectState.Message
+                    })),
+                When(OnUpdate)
                     .Then(TransactionSagaOperations.AddPayments())
                     .RespondAsync(x => x.Init<ITransactionResponse>(new
                     {
                         x.Saga.Transaction
                     })),
-                When(OnFinish)
+                When(OnFinish, context => !TransactionSagaOperations.IsTotalPaid(context.Saga.Transaction))
+                    .RespondAsync(x => x.Init<ISagaError>(new
+                    {
+                        ExceptionCodes.TransactionNotPaid.Code,
+                        ExceptionCodes.TransactionNotPaid.Message
+                    })),
+                When(OnFinish, context => TransactionSagaOperations.IsTotalPaid(context.Saga.Transaction))
                     .Then(x =>
                     {
                         x.Saga.Transaction.State = TransactionConstants.State.Finished;
@@ -81,10 +99,11 @@ namespace SCP.Transaction.Application.Saga
                 x.CorrelateById(m => m.Message.TransactionId);
                 x.OnMissingInstance(m => m.ExecuteAsync(async context =>
                 {
-                    if (context.RequestId.HasValue)
+                    await context.RespondAsync<ISagaError>(new
                     {
-                        await context.RespondAsync<ITransactionNotFoundResponse>(new { });
-                    }
+                        ExceptionCodes.TransactionNotFound.Code,
+                        ExceptionCodes.TransactionNotFound.Message
+                    });
                 }));
             });
             Event(() => OnUpdate, x =>
@@ -92,10 +111,11 @@ namespace SCP.Transaction.Application.Saga
                 x.CorrelateById(m => m.Message.TransactionId);
                 x.OnMissingInstance(m => m.ExecuteAsync(async context =>
                 {
-                    if (context.RequestId.HasValue)
+                    await context.RespondAsync<ISagaError>(new
                     {
-                        await context.RespondAsync<ITransactionNotFoundResponse>(new { });
-                    }
+                        ExceptionCodes.TransactionNotFound.Code,
+                        ExceptionCodes.TransactionNotFound.Message
+                    });
                 }));
             });
             Event(() => OnGet, x =>
@@ -105,12 +125,15 @@ namespace SCP.Transaction.Application.Saga
                 {
                     if (context.RequestId.HasValue)
                     {
-                        await context.RespondAsync<ITransactionNotFoundResponse>(new { });
+                        await context.RespondAsync<ISagaError>(new
+                        {
+                            ExceptionCodes.TransactionNotFound.Code,
+                            ExceptionCodes.TransactionNotFound.Message
+                        });
                     }
                 }));
             });
         }
-
         private void ConfigureStates()
         {
             State(() => Started);

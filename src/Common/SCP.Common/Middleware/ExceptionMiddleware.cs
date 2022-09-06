@@ -5,10 +5,8 @@ using Microsoft.Extensions.Logging;
 using SCP.Common.Constants;
 using SCP.Common.ErrorHandling;
 using SCP.Common.Exceptions;
-using System;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SCP.Common.Middleware
 {
@@ -41,7 +39,7 @@ namespace SCP.Common.Middleware
 
                 ErrorResponse response = new ErrorResponse();
 
-                switch(ex)
+                switch (ex)
                 {
                     case BaseException bEx:
                         response = new ErrorResponse

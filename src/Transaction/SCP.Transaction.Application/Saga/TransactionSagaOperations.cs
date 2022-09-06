@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using SCP.Transaction.Application.Models;
 using SCP.Transaction.Application.Saga.Events;
 using SCP.Transaction.Domain.Constants;
 
@@ -6,11 +7,13 @@ namespace SCP.Transaction.Application.Saga
 {
     public static class TransactionSagaOperations
     {
+        private const decimal Tax = 0.23m;
+
         public static Action<BehaviorContext<TransactionSagaState, IOnTransactionStarted>> CreateTransaction()
         {
             return context =>
             {
-                context.Saga.Transaction = new Models.TransactionModel
+                context.Saga.Transaction = new TransactionModel
                 {
                     TransactionId = context.Message.TransactionId,
                     Sessionid = context.Message.SessionId,
@@ -33,7 +36,7 @@ namespace SCP.Transaction.Application.Saga
                     var article = context.Saga.Transaction.Articles.FirstOrDefault(x => x.ArticleData.EAN.Equals(articleData.EAN));
                     if(article == null)
                     {
-                        article = new Models.ArticleModel
+                        article = new ArticleModel
                         {
                             ArticleData = articleData,
                             LineNumber = ++context.Saga.CurrentLineNumber
@@ -44,6 +47,8 @@ namespace SCP.Transaction.Application.Saga
                     article.Quantity++;
                     article.TotalPrice += articleData.Price; 
                 }
+
+                RecalcaulateTotal(context.Saga.Transaction);
             };
         }
 
@@ -68,6 +73,31 @@ namespace SCP.Transaction.Application.Saga
                     context.Saga.Transaction.Payments.Add(payment);
                 }
             };
+        }
+
+        public static bool IsTotalPaid(TransactionModel transaction)
+        {
+            var total = transaction.Total;
+            var paid = 0m;
+
+            foreach (var payment in transaction.Payments)
+            {
+                paid += payment.Amount;
+            }
+
+            return paid == total.Total;
+        }
+
+        private static void RecalcaulateTotal(TransactionModel transaction)
+        {
+            var total = transaction.Total;
+
+            foreach(var article in transaction.Articles)
+            {
+                total.Total += article.TotalPrice;
+                total.TaxAmount = total.Total * Tax;
+                total.NetAmount = total.Total - total.TaxAmount;
+            }
         }
     }
 }

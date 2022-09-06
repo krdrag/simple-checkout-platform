@@ -31,7 +31,11 @@ namespace SCP.Session.Application.Saga
 
             During(Started,
                 When(OnStart)
-                    .Then(x => throw new IncorrectSagaStateException()),
+                    .RespondAsync(x => x.Init<ISagaError>(new
+                    {
+                        ExceptionCodes.SagaIncorrectState.Code,
+                        ExceptionCodes.SagaIncorrectState.Message
+                    })),
                 When(OnFinish)
                     .Then(SessionSagaOperations.FinishSession)
                     .RespondAsync(x => x.Init<ISessionResponse>(new
@@ -53,7 +57,11 @@ namespace SCP.Session.Application.Saga
                 {
                     if (context.RequestId.HasValue)
                     {
-                        await context.RespondAsync<ISessionNotFoundResponse>(new { });
+                        await context.RespondAsync<ISagaError>(new
+                        {
+                            ExceptionCodes.SessionNotFound.Code,
+                            ExceptionCodes.SessionNotFound.Message
+                        });
                     }
                 }));
             });
@@ -64,7 +72,11 @@ namespace SCP.Session.Application.Saga
                 {
                     if (context.RequestId.HasValue)
                     {
-                        await context.RespondAsync<ISessionNotFoundResponse>(new { });
+                        await context.RespondAsync<ISagaError>(new
+                        {
+                            ExceptionCodes.SessionNotFound.Code,
+                            ExceptionCodes.SessionNotFound.Message
+                        });
                     }
                 }));
             });
