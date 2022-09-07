@@ -7,7 +7,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-services:
+  build-identity-service:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,11 +21,26 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.7
     - name: Docker login
       run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    - name: Build Identity Image 
+    - name: Build Image 
       run: docker build -f src/Identity/SCP.Identity.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
-    - name: Push Identity Image
+    - name: Push Image
       run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
-    - name: Build Session Image 
-      run: docker build -f src/Identity/SCP.Identity.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
-    - name: Push Session Image
-      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
+      
+  build-session-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.7
+    - name: Docker login
+      run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Build Image 
+      run: docker build -f src/Session/SCP.Session.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-session:${GITVERSION_NUGETVERSIONV2}
+    - name: Push Image
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-session:${GITVERSION_NUGETVERSIONV2}
