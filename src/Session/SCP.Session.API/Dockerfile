@@ -22,4 +22,5 @@ RUN dotnet publish "SCP.Session.API.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+LABEL org.opencontainers.image.source https://github.com/krdrag/simple-checkout-platform
 ENTRYPOINT ["dotnet", "SCP.Session.API.dll"]
