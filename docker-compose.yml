@@ -25,6 +25,17 @@ services:
     volumes: 
     - redis-cache:/data
 
+  scp.gateway.api:
+    container_name: scp-gateway
+    image: ${DOCKER_REGISTRY-}scpgatewayapi
+    ports:
+    - "5000:80"
+    env_file:
+    - '.env.docker'
+    build:
+      context: .
+      dockerfile: src/Gateway/SCP.Gateway.API/Dockerfile
+
   scp.identity.api:
     container_name: scp-identity
     image: ${DOCKER_REGISTRY-}scpidentityapi
@@ -41,7 +52,7 @@ services:
     container_name: scp-session
     image: ${DOCKER_REGISTRY-}scpsessionapi
     ports:
-    - "5002:80"
+    - "5001:80"
     env_file:
     - '.env.docker'
     build:
@@ -52,7 +63,7 @@ services:
     container_name: scp-transaction
     image: ${DOCKER_REGISTRY-}scptransactionapi
     ports:
-    - "5001:80"
+    - "5002:80"
     env_file:
     - '.env.docker'
     build:

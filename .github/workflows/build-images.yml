@@ -7,6 +7,25 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  build-gateway-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.7
+    - name: Docker login
+      run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Build Image 
+      run: docker build -f src/Gateway/SCP.Gateway.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-gateway:${GITVERSION_NUGETVERSIONV2}
+    - name: Push Image
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-gateway:${GITVERSION_NUGETVERSIONV2}
+      
   build-identity-service:
     runs-on: ubuntu-latest
     steps:

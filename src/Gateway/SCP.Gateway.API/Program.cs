@@ -1,8 +1,11 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using SCP.Common.Tools;
+
+string configName = EnvironmentCheck.IsDevEnv() ? "configuration.json" : "configuration.docker.json";
 
 IConfiguration configuration = new ConfigurationBuilder()
-                            .AddJsonFile("configuration.json")
+                            .AddJsonFile(configName)
                             .Build();
 
 var builder = WebApplication.CreateBuilder(args);

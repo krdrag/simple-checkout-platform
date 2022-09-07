@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5100
+          "Host": "scp.identity.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/operator/token",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "scp.session.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/session",
@@ -29,8 +29,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "scp.session.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/session/{id}",
@@ -41,8 +41,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "scp.session.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/session/{id}",
@@ -53,8 +53,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "scp.transaction.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/transaction/",
@@ -65,8 +65,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "scp.transaction.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/transaction/article/{id}",
@@ -77,8 +77,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "scp.transaction.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/transaction/total/{id}",
@@ -89,8 +89,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "scp.transaction.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/transaction/payments/{id}",
@@ -101,8 +101,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "scp.transaction.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/transaction/finish/{id}",
@@ -113,8 +113,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "scp.transaction.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/transaction/{id}",
