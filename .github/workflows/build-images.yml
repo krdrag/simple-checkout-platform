@@ -7,7 +7,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-identity-service:
+  build-services:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,7 +21,11 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.7
     - name: Docker login
       run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    - name: Build Image 
+    - name: Build Identity Image 
       run: docker build -f src/Identity/SCP.Identity.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
-    - name: Push Image
+    - name: Push Identity Image
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
+    - name: Build Session Image 
+      run: docker build -f src/Identity/SCP.Identity.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
+    - name: Push Session Image
       run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
