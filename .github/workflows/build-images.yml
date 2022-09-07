@@ -22,6 +22,6 @@ jobs:
     - name: Docker login
       run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Build Image 
-      run: docker build -f src/Identity/SCP.Identity.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/loot-api:${GITVERSION_NUGETVERSIONV2}
+      run: docker build -f src/Identity/SCP.Identity.API/Dockerfile . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
     - name: Push Image
       run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/scp-identity:${GITVERSION_NUGETVERSIONV2}
