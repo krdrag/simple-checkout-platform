@@ -14,12 +14,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:6100/.well-known/openid-configuration",
-							"protocol": "https",
+							"raw": "http://localhost:{{IdentityServicePort}}/.well-known/openid-configuration",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "6100",
+							"port": "{{IdentityServicePort}}",
 							"path": [
 								".well-known",
 								"openid-configuration"
@@ -89,12 +89,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:6100/connect/token",
-							"protocol": "https",
+							"raw": "http://localhost:5100/connect/token",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "6100",
+							"port": "5100",
 							"path": [
 								"connect",
 								"token"
@@ -395,7 +395,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n  {\r\n    \"paymentMediaId\": 1,\r\n    \"amount\": 5\r\n  }\r\n]",
+							"raw": "[\r\n  {\r\n    \"paymentMediaId\": 1,\r\n    \"amount\": 9.99\r\n  }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -551,12 +551,12 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:7004/operator/token",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/operator/token",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"operator",
 										"token"
@@ -568,7 +568,7 @@
 					]
 				},
 				{
-					"name": "Session Copy",
+					"name": "Session",
 					"item": [
 						{
 							"name": "Get Session",
@@ -576,12 +576,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:7004/session/{{SessionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/session/{{SessionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"session",
 										"{{SessionId}}"
@@ -617,15 +617,14 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:7004/session/start",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/session",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
-										"session",
-										"start"
+										"session"
 									]
 								}
 							},
@@ -648,15 +647,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:7004/session/finish/{{SessionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/session/{{SessionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"session",
-										"finish",
 										"{{SessionId}}"
 									]
 								}
@@ -696,7 +694,7 @@
 					]
 				},
 				{
-					"name": "Transaction Copy",
+					"name": "Transaction",
 					"item": [
 						{
 							"name": "Get Transaction",
@@ -704,14 +702,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:7004/transaction/{{TransactionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:5000/{{GatewayServicePort}}/{{TransactionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "5000",
 									"path": [
-										"transaction",
+										"{{GatewayServicePort}}",
 										"{{TransactionId}}"
 									]
 								}
@@ -745,15 +743,14 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:7004/Transaction/start",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/transaction",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
-										"Transaction",
-										"start"
+										"transaction"
 									]
 								}
 							},
@@ -785,12 +782,12 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:7004/Transaction/article/{{TransactionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/Transaction/article/{{TransactionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"Transaction",
 										"article",
@@ -817,12 +814,12 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:7004/Transaction/total/{{TransactionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/Transaction/total/{{TransactionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"Transaction",
 										"total",
@@ -850,7 +847,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\r\n  {\r\n    \"paymentMediaId\": 1,\r\n    \"amount\": 5\r\n  }\r\n]",
+									"raw": "[\r\n  {\r\n    \"paymentMediaId\": 1,\r\n    \"amount\": 9.99\r\n  }\r\n]",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -858,12 +855,12 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:7004/Transaction/payments/{{TransactionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/Transaction/payments/{{TransactionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"Transaction",
 										"payments",
@@ -890,12 +887,12 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:7004/Transaction/finish/{{TransactionId}}",
-									"protocol": "https",
+									"raw": "http://localhost:{{GatewayServicePort}}/Transaction/finish/{{TransactionId}}",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "7004",
+									"port": "{{GatewayServicePort}}",
 									"path": [
 										"Transaction",
 										"finish",
